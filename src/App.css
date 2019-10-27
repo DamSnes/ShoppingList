@@ -48,7 +48,7 @@
   background-color: white;
   border-radius: 9px;
   height: 30px;
-  width: 30px;
+  width: 250px;
   cursor: pointer;
   margin: 10px;
 }
@@ -64,7 +64,7 @@
   background-color: white;
   border-radius: 9px;
   height: 30px;
-  width: 30px;
+  width: 270px;
   cursor: pointer;
   margin: 10px;
 }
@@ -73,20 +73,16 @@
   background-color: darkgray;
 }
 
-.button3 {
+.window {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: white;
   border-radius: 9px;
   height: 30px;
-  width: 30px;
-  cursor: pointer;
+  width: 500px;
+  
   margin: 10px;
-}
-
-.button3:hover {
-  background-color: darkgray;
 }
 
 .content-list {
@@ -109,4 +105,5 @@
 .list {
   display: flex;
   justify-content: center;
+  font-size: 50px;
 }
