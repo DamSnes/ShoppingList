@@ -10,14 +10,13 @@ class Lists extends React.Component {
     // в стейте будет поле id
     // при изменении исходного списка, т.е. items - будем записывать его в локалсторейдж и в стейт
     // чтобы при последующем открытии этой страницы у нас все данные были в ЛС и, соответственно, на странице
-    
+    const items = JSON.parse(localStorage.getItem("1st"));
+
     this.state = {
-      items: [],
+      items: items,
       text: ""
-      
     };
   }
-
 
   onChange = event => {
     const { value } = event.target;
@@ -29,7 +28,7 @@ class Lists extends React.Component {
     if (text) {
       items.push(text);
       this.setState({ items, text: "" });
-      localStorage.setItem("1st", JSON.stringify(items))
+      localStorage.setItem("1st", JSON.stringify(items));
     }
   };
 
@@ -40,7 +39,7 @@ class Lists extends React.Component {
     console.log(items);
 
     this.setState({ items });
-    localStorage.removeItem("1st", JSON.stringify(items));
+    localStorage.setItem("1st", JSON.stringify(items));
   };
 
   render() {
