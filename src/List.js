@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 class Lists extends React.Component {
   constructor(props) {
     super(props);
-    // дергаешь локалсторейдж
-    // сделать, чтобы у каждого списка был айдишник, который будешь прокидывать в стейт
-    // в стейте будет поле id
-    // при изменении исходного списка, т.е. items - будем записывать его в локалсторейдж и в стейт
-    // чтобы при последующем открытии этой страницы у нас все данные были в ЛС и, соответственно, на странице
     const items = JSON.parse(localStorage.getItem("1st"));
-
+    const { id } = this.props.match.params;
+    console.log(id, "id");
+    // запишешь не все айтемс, а айтем с нужным id (с помощью .find() найдешь нужный элемент в массиве)
+    // прочитать про метод массива .find()
+    // const item = items.find(
     this.state = {
+      // item,
       items: items,
       text: ""
     };
