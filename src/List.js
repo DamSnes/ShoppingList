@@ -8,11 +8,16 @@ class Lists extends React.Component {
     const items = JSON.parse(localStorage.getItem("1st"));
     const { id } = this.props.match.params;
     console.log(id, "id");
+    
     // запишешь не все айтемс, а айтем с нужным id (с помощью .find() найдешь нужный элемент в массиве)
     // прочитать про метод массива .find()
-    // const item = items.find(
+      const itemz = items.find((item) => {
+        
+        return item.id === id;
+
+      });
     this.state = {
-      // item,
+      item: items,
       items: items,
       text: ""
     };
