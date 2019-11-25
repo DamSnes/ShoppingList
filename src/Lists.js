@@ -20,10 +20,10 @@ class Lists extends React.Component {
         </div>
 
         <div>
-          <Link to={{ pathname: `./List1` }} className="button1">
+          <Link to={{ pathname: `/list0` }} className="button1">
             Список 1
           </Link>
-          <Link to={{ pathname: `./List2` }} className="button1">
+          <Link to={{ pathname: `/list1` }} className="button1">
             Список 2
           </Link>
         </div>
