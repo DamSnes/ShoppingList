@@ -36,13 +36,13 @@ class Lists extends React.Component {
   };
 
   handleDelete = index => () => {
-    const { items } = this.state;
-    console.log(index);
-    items.splice(index, 1);
-    console.log(items);
+    const { list, lists } = this.state;
+    
+    list.splice(index, 1);
+    lists.splice(list.id, 1, list);
+    this.setState({ lists, list });
 
-    this.setState({ items });
-    localStorage.setItem("1st", JSON.stringify(items));
+  
   };
 
   render() {
@@ -58,58 +58,58 @@ class Lists extends React.Component {
 
     return (
       <>
-        <h3>{name}</h3>
-        {productList.map(item => (
-          <div>
-            <p>{item}</p>
-          </div>
+        
+
+        <div className="header">
+        <div className="name">ShoppingList</div>
+        <Link to={{ pathname: `/ShoppingLists` }} className="button1">
+        Назад
+        </Link>
+        <Link to={{ pathname: `/` }} className="button1">
+        На главную
+        </Link>
+        <div className="window">
+        <p>{`Вы выбрали список ${id}`}</p>
+        <p>{`_Пришли пропсы с customProp = ${
+        props ? props.customProp : "не пришел"
+        }`}</p>
+        </div>
+        </div>
+
+        <div className="content">
+        <input
+        className="input"
+        placeholder="Добавьте покупку ..."
+        value={text}
+        onChange={this.onChange}
+        />
+
+        <div className="submitButton" onClick={this.handleSubmit}>
+        Добавить
+        </div>
+        </div>
+        
+       
+
+
+        <div className="list">
+        
+        <ul>
+        {productList.map((item, index) => (
+        <div className="content-list" key={index}>
+        <div className="content-item">
+        {item}
+        <div
+        className="content-item-delete"
+        onClick={this.handleDelete(index)}
+        >
+        X
+        </div>
+        </div>
+        </div>
         ))}
-        {/*<div className="header">*/}
-        {/*<div className="name">ShoppingList</div>*/}
-        {/*<Link to={{ pathname: `/ShoppingLists` }} className="button1">*/}
-        {/*Назад*/}
-        {/*</Link>*/}
-        {/*<Link to={{ pathname: `/` }} className="button1">*/}
-        {/*На главную*/}
-        {/*</Link>*/}
-        {/*<div className="window">*/}
-        {/*<p>{`Вы выбрали список ${id}`}</p>*/}
-        {/*<p>{`_Пришли пропсы с customProp = ${*/}
-        {/*props ? props.customProp : "не пришел"*/}
-        {/*}`}</p>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-
-        {/*<div className="content">*/}
-        {/*<input*/}
-        {/*className="input"*/}
-        {/*placeholder="Добавьте покупку ..."*/}
-        {/*value={text}*/}
-        {/*onChange={this.onChange}*/}
-        {/*/>*/}
-
-        {/*<div className="submitButton" onClick={this.handleSubmit}>*/}
-        {/*Добавить*/}
-        {/*</div>*/}
-        {/*</div>*/}
-
-        {/*<div className="list">*/}
-        {/*<ul>*/}
-        {/*{items.map((item, index) => (*/}
-        {/*<div className="content-list" key={index}>*/}
-        {/*<div className="content-item">*/}
-        {/*{item}*/}
-        {/*<div*/}
-        {/*className="content-item-delete"*/}
-        {/*onClick={this.handleDelete(index)}*/}
-        {/*>*/}
-        {/*X*/}
-        {/*</div>*/}
-        {/*</div>*/}
-        {/*</div>*/}
-        {/*))}*/}
-        {/*</ul>*/}
-        {/*</div>*/}
+        </ul>
+        </div>
       </>
     );
   }
