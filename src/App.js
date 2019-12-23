@@ -15,7 +15,7 @@ class App extends React.Component {
         </div>
 
         <div className="list">
-          <p>ДОБРО ПОЖАЛОВАТЬ В ВАШ "ShoppingList"</p>
+          <p className="mainText">ДОБРО ПОЖАЛОВАТЬ В ВАШ "ShoppingList"</p>
         </div>
       </>
     );

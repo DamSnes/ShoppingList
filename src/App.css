@@ -1,12 +1,37 @@
-.header{
+.header {
   display: flex;
   width: 100%;
   align-items: center;
   height: 60px;
   background-color: #8ffd8f;
+  font-family: Impact, fantasy;
+
+  background:
+        radial-gradient(
+            khaki 40px,
+            transparent 0,
+            transparent 100%
+        ),
+        radial-gradient(
+            skyblue 40px,
+            transparent 0,
+            transparent 100%
+        ),
+        radial-gradient(
+            pink 40px,
+            transparent 0,
+            transparent 100%
+        ), snow;
+    background-blend-mode: multiply;
+    background-size: 100px 100px;
+    background-position: 0 0, 33px 33px, -33px -33px;
 }
 
-.name{
+.mainText {
+  font-family: Trattatello, fantasy;
+}
+
+.name {
   margin: 20px;
   font-size: 20px;
 }
@@ -47,14 +72,28 @@
   align-items: center;
   background-color: white;
   border-radius: 9px;
-  height: 30px;
+  height: 10px;
   width: 250px;
   cursor: pointer;
   margin: 10px;
+  font-family: FreeMono, monospace ;
+
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
 }
 
 .button1:hover {
-  background-color: darkgray;
+  background: rgb(53, 167, 110);
+  
+}
+.button1:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
 }
 
 .button2 {
@@ -81,7 +120,7 @@
   border-radius: 9px;
   height: 30px;
   width: 500px;
-  
+
   margin: 10px;
 }
 
@@ -114,8 +153,31 @@
   margin-left: 30px;
 }
 
+.content-item-done {
+  cursor: pointer;
+  border: 1px solid black;
+  margin-left: 15px;
+
+  font-weight: 70;
+  color: white;
+  text-decoration: none;
+  padding: .15px 25px ;
+  border-radius: 3px;
+  background: #4049c7;
+  box-shadow: 0 -3px #282d7c inset;
+  transition: 0.2s;
+}
+.content-item-done:hover {
+  background: #282d7c;
+}
+
+
 .list {
   display: flex;
   justify-content: center;
   font-size: 50px;
+}
+
+.done {
+  text-decoration: line-through;
 }

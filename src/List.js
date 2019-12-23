@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
+import ContentList from "./ContentList";
 
 class Lists extends React.Component {
   constructor(props) {
@@ -8,14 +9,16 @@ class Lists extends React.Component {
     const lists = JSON.parse(localStorage.getItem("listAcc"));
     const { id } = this.props.match.params;
 
-    // запишешь не все айтемс, а айтем с нужным id (с помощью .find() найдешь нужный элемент в массиве)
-    // прочитать про метод массива .find()
+  
     console.log(id, lists);
 
     this.state = {
       lists,
       list: this.getList(lists, id),
-      text: ""
+      text: "",
+      changeableText: "",
+      changeText: ""
+    
     };
   }
 
@@ -29,20 +32,48 @@ class Lists extends React.Component {
   handleSubmit = () => {
     const { text, list, lists } = this.state;
     if (text) {
-      list.productList.push(text);
+      list.productList.push({ name: text, done: false, isEditing: false });
       lists.splice(list.id, 1, list);
       this.setState({ lists, list, text: "" });
+      localStorage.setItem("listAcc", JSON.stringify(lists));
     }
+  };
+
+  handleDone = index => () => {
+    const {
+      list: { productList },
+      list,
+      lists
+    } = this.state;
+    const product = productList[index];
+    product.isEditing = !product.isEditing;
+    productList.splice(index, 1, product);
+    this.setState({ list: { ...list, productList }, product, text: "" });
+    localStorage.setItem("listAcc", JSON.stringify(lists));
+  };
+
+  handleSave = index => () => {
+    const {
+      list: { productList },
+      list,
+      changeableText,
+      lists
+    } = this.state;
+    const product = productList[index];
+    product.name = changeableText;
+    product.isEditing = false;
+    productList.splice(index, 1, product);
+    this.setState({ list: { ...list, productList }, product, text: "" });
+    localStorage.setItem("listAcc", JSON.stringify(lists));
   };
 
   handleDelete = index => () => {
     const { list, lists } = this.state;
-    
-    list.splice(index, 1);
+    console.log(list, "list");
+    list.productList.splice(index, 1);
     lists.splice(list.id, 1, list);
     this.setState({ lists, list });
-
-  
+    localStorage.setItem("listAcc", JSON.stringify(lists));
   };
 
   render() {
@@ -53,62 +84,54 @@ class Lists extends React.Component {
     } = match;
     const {
       list: { productList, name },
-      text
+      text,
+      changeableText
     } = this.state;
-
+    console.log(productList, "productList");
     return (
       <>
-        
-
         <div className="header">
-        <div className="name">ShoppingList</div>
-        <Link to={{ pathname: `/ShoppingLists` }} className="button1">
-        Назад
-        </Link>
-        <Link to={{ pathname: `/` }} className="button1">
-        На главную
-        </Link>
-        <div className="window">
-        <p>{`Вы выбрали список ${id}`}</p>
-        <p>{`_Пришли пропсы с customProp = ${
-        props ? props.customProp : "не пришел"
-        }`}</p>
-        </div>
+          <div className="name">ShoppingList</div>
+          <Link to={{ pathname: `/ShoppingLists` }} className="button1">
+            Назад
+          </Link>
+          <Link to={{ pathname: `/` }} className="button1">
+            На главную
+          </Link>
+          {/* <div className="window">
+            <p>{`Вы выбрали список ${id}`}</p>
+            <p>{`_Пришли пропсы с customProp = ${
+              props ? props.customProp : "не пришел"
+            }`}</p>
+          </div> */}
         </div>
 
         <div className="content">
-        <input
-        className="input"
-        placeholder="Добавьте покупку ..."
-        value={text}
-        onChange={this.onChange}
-        />
+          <input
+            className="input"
+            placeholder="Добавьте покупку ..."
+            value={text}
+            onChange={this.onChange}
+          />
 
-        <div className="submitButton" onClick={this.handleSubmit}>
-        Добавить
+          <div className="submitButton" onClick={this.handleSubmit}>
+            Добавить
+          </div>
         </div>
-        </div>
-        
-       
-
 
         <div className="list">
-        
-        <ul>
-        {productList.map((item, index) => (
-        <div className="content-list" key={index}>
-        <div className="content-item">
-        {item}
-        <div
-        className="content-item-delete"
-        onClick={this.handleDelete(index)}
-        >
-        X
-        </div>
-        </div>
-        </div>
-        ))}
-        </ul>
+          <ul>
+            {productList.map((product, index) => (
+              <ContentList
+                index={index}
+                key={index}
+                handleDone={this.handleDone}
+                handleSave={this.handleSave}
+                handleDelete={this.handleDelete}
+                product={product}
+              />
+            ))}
+          </ul>
         </div>
       </>
     );
