@@ -9,7 +9,6 @@ class Lists extends React.Component {
     const lists = JSON.parse(localStorage.getItem("listAcc"));
     const { id } = this.props.match.params;
 
-  
     console.log(id, lists);
 
     this.state = {
@@ -17,8 +16,8 @@ class Lists extends React.Component {
       list: this.getList(lists, id),
       text: "",
       changeableText: "",
-      changeText: ""
-    
+      changeText: "",
+      product: ""
     };
   }
 
@@ -27,6 +26,12 @@ class Lists extends React.Component {
   onChange = event => {
     const { value } = event.target;
     this.setState({ text: value });
+  };
+
+  markDone = () => {
+    const { product } = this.state;
+    product.done = !product.done;
+    this.setState({ product });
   };
 
   handleSubmit = () => {
@@ -39,29 +44,13 @@ class Lists extends React.Component {
     }
   };
 
-  handleDone = index => () => {
-    const {
-      list: { productList },
-      list,
-      lists
-    } = this.state;
-    const product = productList[index];
-    product.isEditing = !product.isEditing;
-    productList.splice(index, 1, product);
-    this.setState({ list: { ...list, productList }, product, text: "" });
-    localStorage.setItem("listAcc", JSON.stringify(lists));
-  };
+  handleSave = index => product => {
 
-  handleSave = index => () => {
     const {
       list: { productList },
       list,
-      changeableText,
       lists
     } = this.state;
-    const product = productList[index];
-    product.name = changeableText;
-    product.isEditing = false;
     productList.splice(index, 1, product);
     this.setState({ list: { ...list, productList }, product, text: "" });
     localStorage.setItem("listAcc", JSON.stringify(lists));
@@ -125,10 +114,10 @@ class Lists extends React.Component {
               <ContentList
                 index={index}
                 key={index}
-                handleDone={this.handleDone}
-                handleSave={this.handleSave}
+                handleSave={this.handleSave(index)}
                 handleDelete={this.handleDelete}
                 product={product}
+                markDone={this.markDone}
               />
             ))}
           </ul>

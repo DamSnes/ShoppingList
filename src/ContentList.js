@@ -1,78 +1,71 @@
 import React, { Component } from "react";
-import "./index.css";
 
-class ContentList extends Component {
+class Product extends Component {
   constructor(props) {
     super(props);
-    const { product } = props;
-    this.state = { product, changeText: ""};
-    const lists = JSON.parse(localStorage.getItem("listAcc"));
+    this.state = { changeText: props.product.name, ...props.product };
   }
 
-  markDone = () => {
-    const { product } = this.state;
-    product.done = !product.done;
-    this.setState({ product });
+  editName = event => {
+    this.setState({ changeText: event.target.value });
   };
 
-  // handleDone = index => () => {
-  //   const {
-  //     list: { productList },
-  //     list,
-  //     lists
-  //   } = this.state;
-  //   const product = productList[index];
-  //   product.isEditing = !product.isEditing;
-  //   productList.splice(index, 1, product);
-  //   this.setState({ list: { ...list, productList }, product, changeText: "", text: "" });
-  //   localStorage.setItem("listAcc", JSON.stringify(lists));
+  handleDeleteItem = index => () => {
+    const { handleDelete } = this.props;
 
-  handleSave1 = index => () => {
-    
-    const {changeText} = this.setState;
-    this.setState({ changeText: ""});
-    // localStorage.setItem("listAcc", JSON.stringify(lists));
   };
-  
-  onProductChange = event => {
-    const { value } = event.target;
-    this.setState({ changeText: value });
+
+  saveChanges = () => {
+    const { handleSave } = this.props;
+    const { isEditing, done, changeText } = this.state;
+    this.setState({
+      isEditing: false,
+      name: this.state.changeText
+    });
+    handleSave({ name: changeText, done, isEditing: false });
   };
+
   render() {
-    const {
-      product: { isEditing, name, done },
-      changeText
-    } = this.state;
-    const { handleDone, handleSave, handleDelete, index } = this.props;
-    console.log(index, "name");
+    const { name, done, isEditing, changeText, handleDeleteItem, index, markDone } = this.state;
     return (
+      <>
       <div className="content-list">
-        <div className="content-item">
-          {isEditing ? (
-            <input
-              className="input"
-              placeholder=""
-              value={changeText}
-              onChange={this.onProductChange}
-            />
-          ) : (
-            <p onClick={this.markDone} className={done && "done"}>
+      <div className="content-item">
+      <div>
+        {isEditing ? (
+          <>
+            <input onChange={this.editName} value={changeText} />
+            <button className="content-item-done" onClick={this.saveChanges}>Сохранить</button>
+          </>
+        ) : (
+          <>
+            <p onClick={markDone} className={done && "done"}>
               {name}
             </p>
-          )}
-          <div className="content-item-delete" onClick={handleDelete(index)}>
+            <p>Название: {name}</p>
+            <div className="content-item-done"
+              onClick={() => {
+                this.setState({ isEditing: true });
+              }}
+            >
+              Изменить
+            </div>
+            <div className="content-item-delete" onClick={this.handleDeleteItem}>
             X
-          </div>
-          <div
-            className="content-item-done"
-            onClick={isEditing ? handleSave(index) : handleDone(index)}
-          >
-            Edit
-          </div>
-        </div>
+            </div>
+
+            
+          </>
+        )}
+
+        {name} {"" + done} {"" + isEditing}
       </div>
+      </div>
+      </div>
+      
+    </>
     );
   }
 }
-
-export default ContentList;
+// done ? "done" : "" зачёркивание
+export default Product;
