@@ -29,6 +29,7 @@ class Product extends Component {
     const { name, done, isEditing, changeText, handleDeleteItem, index, markDone } = this.state;
     return (
       <>
+      <div className="content">
       <div className="content-list">
       <div className="content-item">
       <div>
@@ -59,6 +60,7 @@ class Product extends Component {
         )}
 
         {name} {"" + done} {"" + isEditing}
+      </div>
       </div>
       </div>
       </div>

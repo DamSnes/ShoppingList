@@ -142,22 +142,30 @@
 }
 
 .content-item-delete {
-  color: red;
-  font-size: 18px;
-  text-align: center;
-  border-radius: 25px;
-  width: 25px;
-  border: 1px solid black;
-  height: 25px;
   cursor: pointer;
-  margin-left: 30px;
+  border: 1px solid black;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  font-weight: 70;
+  color: white;
+  text-decoration: none;
+  padding: .15px 25px ;
+  border-radius: 3px;
+  background: #c7404b;
+  box-shadow: 0 -3px #8d2c34 inset;
+  transition: 0.2s;
+}
+.content-item-delete:hover {
+  background: #8d2c34;
 }
 
 .content-item-done {
   cursor: pointer;
   border: 1px solid black;
   margin-left: 15px;
-
+  display: flex;
+  justify-content: center;
   font-weight: 70;
   color: white;
   text-decoration: none;
